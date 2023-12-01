@@ -25,6 +25,25 @@ let menu = Menu::new()
   .add_submenu(submenu);
 ```
 
+
+### Applying Keyboard Shortcuts to Menu Items
+
+When creating a native menubar item, keyboard shortcuts, also known as \"accelerators\" allow the user to quickly press specific keys on the keyboard to trigger a menubar item at any time. To add a keyboard shortcut to a menu item, we can use the `accelerator` feature of the `tauri::CustomMenuItem` type. The `.accelerator` feature takes an input of a string, which will be read for different inputs that specify the command of the menu item. Here's an example in Rust that shows how one can specify a command or control input, specifically with "command" being used for MacOS platforms, and "Ctrl" being used for Windows, Linux, and similar platforms.
+
+```rust 
+let menu = Menu::new()
+  .add_item(CustomMenuItem::new("example", "Example Command")
+    .accelerator("CommandOrControl+E"))
+  .add_item(CustomMenuItem::new("second", "Second Example Command")
+    .accelerator("CmdOrCtrl+F"))
+```
+
+This code shows an example of how both "CommandOrControl", or "CmdOrCtrl" for short, are both acceptable ways of specifying that a command (MacOS) or Ctrl (Other) key is part of the command. 
+
+Various other inputs can be added to the command input, including every keyboard letter, numbers 0 - 9, function keys (F1 - F12), Alt, and various symbols including all punctuation marks. A full list can be seen at the <a href='https://www.electronjs.org/docs/latest/api/global-shortcut'>globalShortcut</a> module documentation.
+
+
+
 ### Adding the menu to all windows
 
 The defined menu can be set to all windows using the `menu` API on the `tauri::Builder` struct:
